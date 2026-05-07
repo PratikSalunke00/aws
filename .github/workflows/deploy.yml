@@ -31,16 +31,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
 
-      - name: Push to S3
-        run: |
-          aws s3 sync ./dist s3://bucket-s3-aws-aws --delete --exclude "*.js" --exclude "*.css"
-
-          aws s3 sync ./dist s3://bucket-s3-aws-aws \
-            --exclude "*" \
-            --include "*.js" \
-            --content-type "application/javascript"
-
-          aws s3 sync ./dist s3://bucket-s3-aws-aws \
-            --exclude "*" \
-            --include "*.css" \
-            --content-type "text/css"
+    
+      - name: Deploy to S3
+        run: aws s3 sync dist/ s3://bucket-s3-aws-aws --delete
