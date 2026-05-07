@@ -35,4 +35,4 @@ jobs:
           aws-region: ap-south-1
 
       - name: Deploy to S3
-        run: aws s3 sync ./dist s3://bucket-s3-aws-aws --delete
+        run: aws s3 sync ./build s3://bucket-s3-aws-aws --delete
