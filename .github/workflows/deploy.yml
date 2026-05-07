@@ -18,6 +18,11 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -28,17 +33,14 @@ jobs:
 
       - name: Push to S3
         run: |
-            # First sync non-JS/CSS files
-            aws s3 sync ./dist s3://bucket-s3-aws-aws --delete --exclude "*.js" --exclude "*.css"
+          aws s3 sync ./dist s3://bucket-s3-aws-aws --delete --exclude "*.js" --exclude "*.css"
 
-            # Then sync JS files with correct content type
-            aws s3 sync ./dist s3://bucket-s3-aws-aws \
+          aws s3 sync ./dist s3://bucket-s3-aws-aws \
             --exclude "*" \
             --include "*.js" \
             --content-type "application/javascript"
 
-            # Then sync CSS files with correct content type
-                aws s3 sync ./dist s3://bucket-s3-aws-aws \
-                --exclude "*" \
-                --include "*.css" \
-                --content-type "text/css"
+          aws s3 sync ./dist s3://bucket-s3-aws-aws \
+            --exclude "*" \
+            --include "*.css" \
+            --content-type "text/css"
