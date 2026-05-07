@@ -24,8 +24,8 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Check build folder
-        run: ls
+      - name: Show files
+        run: ls -la
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -35,4 +35,4 @@ jobs:
           aws-region: ap-south-1
 
       - name: Deploy to S3
-        run: aws s3 sync s3://bucket-s3-aws-aws --delete
+        run: aws s3 sync ./dist s3://bucket-s3-aws-aws --delete
